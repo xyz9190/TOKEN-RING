@@ -1,0 +1,119 @@
+
+import java.util.Scanner;
+
+public class TokenRing {
+    private int numProcesses;
+    private int tokenHolder;
+
+    public TokenRing(int numProcesses) {
+        this.numProcesses = numProcesses;
+        this.tokenHolder = 0;
+    }
+
+    public void displayRing() {
+        StringBuilder ring = new StringBuilder();
+        for (int i = 0; i < numProcesses; i++) {
+            ring.append(i);
+        }
+        System.out.println("Ring formed is as below: " + ring.toString());
+    }
+
+    public void processWantsAccess(int processId) {
+        System.out.println("Process " + processId + " is in the critical section.");
+        System.out.println("Process " + processId + " is accessing the shared resource.");
+        System.out.println("Process " + processId + " releases the token.");
+        tokenHolder = (processId + 1) % numProcesses;
+    }
+
+    public void execute() {
+        displayRing();
+        System.out.println("Process " + tokenHolder + " has the token.");
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.print("Enter the process ID that wants to access the shared resource: ");
+            int processId = scanner.nextInt();
+            if (processId == tokenHolder) {
+                processWantsAccess(processId);
+                displayRing();
+            } else {
+                System.out.println("Error: Process " + processId + " does not have the token.");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number of processes: ");
+        int numProcesses = scanner.nextInt();
+        TokenRing tokenRing = new TokenRing(numProcesses);
+        tokenRing.execute();
+    }
+}
+
+
+/*
+OUTPUT:-
+it@it-HP-EliteDesk-800-G2-SFF:~/Desktop/Nikita$ javac TokenRing.java
+it@it-HP-EliteDesk-800-G2-SFF:~/Desktop/Nikita$ java TokenRing
+Enter the number of processes: 10
+Ring formed is as below: 0123456789
+Process 0 has the token.
+Enter the process ID that wants to access the shared resource: 0
+Process 0 is in the critical section.
+Process 0 is accessing the shared resource.
+Process 0 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 1
+Process 1 is in the critical section.
+Process 1 is accessing the shared resource.
+Process 1 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 2
+Process 2 is in the critical section.
+Process 2 is accessing the shared resource.
+Process 2 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 3
+Process 3 is in the critical section.
+Process 3 is accessing the shared resource.
+Process 3 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 4
+Process 4 is in the critical section.
+Process 4 is accessing the shared resource.
+Process 4 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 5
+Process 5 is in the critical section.
+Process 5 is accessing the shared resource.
+Process 5 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 6
+Process 6 is in the critical section.
+Process 6 is accessing the shared resource.
+Process 6 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 7
+Process 7 is in the critical section.
+Process 7 is accessing the shared resource.
+Process 7 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 8
+Process 8 is in the critical section.
+Process 8 is accessing the shared resource.
+Process 8 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 9
+Process 9 is in the critical section.
+Process 9 is accessing the shared resource.
+Process 9 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 0
+Process 0 is in the critical section.
+Process 0 is accessing the shared resource.
+Process 0 releases the token.
+Ring formed is as below: 0123456789
+Enter the process ID that wants to access the shared resource: 
+*/
+
+
